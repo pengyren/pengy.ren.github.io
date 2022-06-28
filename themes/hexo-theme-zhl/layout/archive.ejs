@@ -1,0 +1,32 @@
+<div id="archive">
+  <% if(page.month) {%>
+<h2><%=page.month + '/' + page.year%></h2>
+<% } else { %>
+<h2><%=page.year %></h2>
+<% } %>
+<% page.posts.each(function(article) { %>
+           <% if (article.link) { %>
+    <a href="<%= url_for(article.link) %>" target="_blank" class="archive-item">
+        <span>
+          <%=article.title || 'No Title'%>
+        </span> 
+      <time datetime="<%=date_xml(article.date)%>">
+        <%=date(article.date)%>
+      </time>
+    </a>
+    <% }else { %>
+        <a href="<%=url_for(article.path)%>" taget="_blank" class="archive-item">
+        <span>
+          <%=article.title || 'No Title'%>
+        </span>
+        <time datetime="<%=date_xml(article.date)%>">
+          <%=date(article.date)%>
+        </time>
+        </a>
+      <% } %>
+  <% }); %>
+  <%　if(page.total >1 ){ %>
+<%- partial('_partials/my_paginator') %>
+<% } %>
+</div>
+

@@ -1,0 +1,67 @@
+
+vendor(prop,args)
+	-webkit-{prop} args
+	-moz-{prop} args
+	{prop} args
+
+@import "./reset.styl"
+@import "./varible.styl"
+@import "./fa.styl"
+@import "./widget.styl"
+@import "./index-article.styl"
+@import "./header.styl"
+@import "./car-tag-arc.styl"
+@import "./tool.styl"
+@import "./post.styl"
+@import "./page-nav.styl"
+@import "./bottom.styl"
+.fixed
+	position: fixed
+	height: 2rem
+	top:0
+.bg_content
+	position:fixed
+	top:0
+	z-index: -1
+	width:100%
+	height:100%
+#canvas
+	width:100%
+	height:100%
+
+#header
+	width:100%
+	display:flex
+	align-items: center
+	justify-content:space-between
+	border-bottom: 1px solid #ddd
+	background-color:#fff
+#content
+	width:100%
+	display:flex
+	align-items:flex-start
+#content-left
+	width:20%
+	margin-left: 2em
+	margin-top: 2em
+	border-right: 1px solid #ddd
+#content-right
+	width:80%
+
+
+@media (max-width:768px)
+	#header-right
+		display:none
+	#content-left
+		display:none
+	#content-right
+		width:100%
+
+	
+
+
+
+
+
+
+

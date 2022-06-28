@@ -1,0 +1,14 @@
+	<div class="right-content">
+<% page.posts.each(function(post){ %>
+<div class="right-post">
+<%- partial('_partials/index_article',{post: post}) %>
+</div>
+<%　}) %>
+</div>
+<% if(page.total >1){ %>
+<%- partial('_partials/my_paginator')%>
+
+<% } %>
+
+
+

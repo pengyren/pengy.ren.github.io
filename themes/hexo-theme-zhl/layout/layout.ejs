@@ -1,0 +1,34 @@
+
+<%- partial('_partials/head')%>
+<body>
+<div class="container-fluid">
+  <div class="row">
+  <div id="wrap" class="col-md-12">
+    <%- partial('_partials/header',null,{cache: !config.relatiive_link}) %>
+  </div>
+  </div>
+  <div id="content" class="row">
+    <div id="content-left" class="col-md-4">
+      <%- partial('_partials/left',null,{cache: !config.relative_link}) %>
+    </div>
+    <div id="content-right" class="col-md-8">
+    <%- body %>
+    </div>
+  </div>
+  <div class="row">
+<div id="bottom" class="col-md-12"> 
+  <%- partial('_partials/footer', null, {cache:!config.relative_link}) %>
+</div>
+</div>
+</div>
+<div id="tool">
+  <ul>
+    <li class="fa fa-angle-up top" id="top"></li>
+  </ul>
+</div>
+  <div class="bg_content">
+    <canvas id="canvas"></canvas>
+  </div>
+  <%- partial('_partials/after-footer') %>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<div id="header">
+	<div id="header-left">
+	<h1 id="header-title"> 
+	<a href="<%- url_for()%>">
+		<%= config.title%>
+	</a>
+	</h1>
+	<% if(theme.subtitle){%>
+	<h2 id="header-subtitle">
+		<a href="<%- url_for()%>"><%= theme.subtitle%></a>
+	</h2>
+		<%}%>
+	</div>
+	<div id="header-right">
+		<% if(theme.menu && theme.menu.length){ %>
+		<% theme.menu.forEach(function(item){ %>
+		<a href="<%- url_for(item.url) %>"  title="<%= item.page %>"><i class="fa <%= item.icon %> "><%= item.page %></i></a>
+		<% }) %>
+		<% } %>
+	</div>
+</div>
