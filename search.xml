@@ -1,6 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2022暑假腰带攻略</title>
+    <url>/2022/06/28/2022%E6%9A%91%E5%81%87%E8%85%B0%E5%B8%A6%E6%94%BB%E7%95%A5/</url>
+    <content><![CDATA[<h1><span id="2022-shu-jia-yao-dai-gong-lue">2022暑假腰带攻略</span><a href="#2022-shu-jia-yao-dai-gong-lue" class="header-anchor">#</a></h1><div class="toc">
+
+<!-- toc -->
+
+<ul>
+<li><a href="#yao-dai-ling-qu">腰带领取</a></li>
+<li><a href="#yao-dai-qiang-hua">腰带强化</a></li>
+<li><a href="#tiao-zhan-nan-du">挑战难度</a><ul>
+<li><a href="#xie-jiang-dou-dou">蟹将豆豆</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+</div>
+
+
+<h2><span id="yao-dai-ling-qu">腰带领取</span><a href="#yao-dai-ling-qu" class="header-anchor">#</a></h2><p><strong>往年</strong>：腰带要做环任务领取；</p>
+<p><strong>今年</strong>：直接找npc领取（选炼金丝-领取腰带）</p>
+<h2><span id="yao-dai-qiang-hua">腰带强化</span><a href="#yao-dai-qiang-hua" class="header-anchor">#</a></h2><p><strong>往年</strong>：刷环+副本+挑战获取材料，用材料强化；</p>
+<p><strong>今年</strong>：刷豆豆首领挑战（npc对话选战英豪），进去后有豆豆首领npc可以挑战，每一种豆豆首领的<strong>首次</strong>通关可以获得强化腰带的次数+1，刷普通难度和英雄难度的首通都可以；</p>
+<p>获得强化次数之后，出去找活动npc选炼金丝-怎么强化-然后可以看到强化次数，对腰带进行强化；</p>
+<p>在暑假活动的一些过程中会获得松烟墨钨金，钨金可以熔炼腰带，属性随机加减，有人预测升满的腰带熔炼上限应该是固伤+10；</p>
+<h2><span id="tiao-zhan-nan-du">挑战难度</span><a href="#tiao-zhan-nan-du" class="header-anchor">#</a></h2><p>分普通和英雄</p>
+<h3><span id="xie-jiang-dou-dou">蟹将豆豆</span><a href="#xie-jiang-dou-dou" class="header-anchor">#</a></h3><p>两种难度怪物机制基本相同，英雄难度前排3个，普通难度前排2个；</p>
+<p>后排最两侧的怪是物理，stl或者dt，会破血，可以考虑封印；</p>
+<p>前排两只怪会一直破血集火bb，须弥杀手，建议用血攻；</p>
+<p>怪物血量的话，129的小怪，普通难度血量4w+，英雄目测3倍血量；</p>
+<p>普通难度伤害不高，英雄难度法伤挺高，固伤没奶没罗汉可能会扛不住；</p>
+]]></content>
+      <categories>
+        <category>梦幻西游</category>
+      </categories>
+      <tags>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL时间戳索引失效SQL慢查问题排查</title>
+    <url>/2022/06/25/MySQL%E6%97%B6%E9%97%B4%E6%88%B3%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88SQL%E6%85%A2%E6%9F%A5%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</url>
+    <content><![CDATA[<h1><span id="mysql-shi-jian-chuo-suo-yin-shi-xiao-sql-man-cha-wen-ti-pai-cha">MySQL时间戳索引失效SQL慢查问题排查</span><a href="#mysql-shi-jian-chuo-suo-yin-shi-xiao-sql-man-cha-wen-ti-pai-cha" class="header-anchor">#</a></h1><div class="toc">
+
+<!-- toc -->
+
+
+
+<!-- tocstop -->
+
+</div>
+
+
+<p>最近一次sql慢查的排查过程其中一个点是自己之前没有关注过的，分享一下</p>
+<p>首先有一张表tableA {</p>
+<p>  id 主键 自增</p>
+<p>  create_time 创建时间 默认mysql当前时间自动填充</p>
+<p>  ….. 其他字段</p>
+<p>}，</p>
+<p>表结构中含有常规的id, create_time, update_time之类的字段，create_time字段建了索引；</p>
+<p>tableA每天会在上午6点50左右接收一批同步数据，数据量大约在40000+</p>
+<p>该表保留一周的数据，因此该表数据的总行数目前维持在35W+</p>
+<p>查询的sql使用了create_time的查询条件，查询的时间区间时1天，理论上能查出的数据在40000+，占数据总量的约11%，理应走索引查询</p>
+<p>但是，实际的执行过程显示，该sql还是走了全表扫描；经验证，即使查询条件只有create_time也是走了全表扫描；</p>
+<p>我们尝试了缩短查询时间区间，当查询区间内不含数据时才走了索引查询，但是一旦涵盖了当天同步过来的数据，就变成了全表扫描；</p>
+<p>于是我们对<strong>数据的内容</strong>进行了分析，发现由于这批数据基本都是在那个时间点同步过来，create_time是数据insert到表中时的当前时间自动获取的默认值，因此create_time会有大量的重复；</p>
+<p>我们select count(distinct create_time) from tableA后得到35W+的数据，create_time只有<strong>97</strong>种</p>
+<p>我们再慢查SQL的部分统计了count(distinct create_time)，得到的create_time是<strong>11</strong>种，</p>
+<p><strong>结论：</strong></p>
+<p>由此我们断定，像这样的根茎节点非常少，一个父节点下面挂了3700多个叶子节点的情况，即便是我们对这个create_time建了索引，但是走索引和不走索引相差无几，故mysql引擎选择了全表扫描；</p>
+<blockquote>
+<p>在建立索引的时候，要根据列基数来建立，列基数&#x3D;列中不同的数据&#x2F;除以总数据，越接近1表示重复数据越少，越适合建立索引。</p>
+</blockquote>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzEwLzE3MzM3YjI5MGNhNWJiZmY?x-oss-process=image/format,png"></p>
+]]></content>
+      <categories>
+        <category>code</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>clickhouse分区表调研</title>
     <url>/2022/06/28/clickhouse%E5%88%86%E5%8C%BA%E8%A1%A8%E8%B0%83%E7%A0%94/</url>
     <content><![CDATA[<h1><span id="clickhouse-fen-qu-biao-diao-yan">clickhouse分区表调研</span><a href="#clickhouse-fen-qu-biao-diao-yan" class="header-anchor">#</a></h1><div class="toc">
